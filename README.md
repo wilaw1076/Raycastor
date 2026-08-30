@@ -31,14 +31,19 @@ A real-time raycasting engine built in C++ and OpenGL. The project delves into D
 5. The distance is corrected for fisheye distortion.
 6. The corrected distance is converted into a projected wall height.
 7. OpenGL draws the resulting wall slices.
-
 ---
 
 ## Raycasting Math
 
-Optional, but this would make your repo stand out.
+### DDA (Digital Differential Analyzer)
+
+DDA is a 2D grid-traversal algorithm used to efficiently determine which map cells a ray passes through. Instead of advancing the ray in small fixed increments, DDA jumps directly from one grid boundary to the next.
+
+The initialization stage determines the distance from the player's position to the first vertical and horizontal grid boundaries.
 
 ### Ray Direction
+
+Each ray direction is represented by its horizontal and vertical components:
 
 ```cpp
 rayDirX = cos(rayAngle);
