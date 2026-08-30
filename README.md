@@ -2,12 +2,7 @@
 
 A real-time raycasting engine built in C++ and OpenGL. The project delves into DDA-based raycasting, 2D map visualization, and Wolfenstein-style pseudo-3D rendering.
 
-## Features
-
-- [Feature 1]
-- [Feature 2]
-- [Feature 3]
-- [Feature 4]
+---
 
 Good things to mention for your project:
 - DDA raycasting
@@ -27,7 +22,7 @@ Good things to mention for your project:
 - GLFW
 - GLAD
 - Make / MinGW
-
+---
 ## How It Works
 
 1. The player position and angle determine the direction of each ray.
