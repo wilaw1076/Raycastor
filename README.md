@@ -3,8 +3,7 @@
 A real-time raycasting engine built in C++ and OpenGL. The project delves into DDA-based raycasting, 2D map visualization, and Wolfenstein-style pseudo-3D rendering.
 
 ---
-
-Good things to mention for your project:
+##Implementations
 - DDA raycasting
 - player movement and collision
 - configurable FOV
