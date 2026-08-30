@@ -15,7 +15,8 @@ const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 const float PI = 3.14159265f;
 const float FOV = PI / 2.0f;
-const int NUM_RAYS = 120;
+const int NUM_RAYS = 800;
+const GLfloat WALL_COLOR[4] = {0.5f, 0.5f, 0.5f, 1.0f};
 
 const char *vertexShaderSource = "#version 330 core\n"
     "layout (location = 0) in vec3 aPos;\n"
@@ -25,9 +26,10 @@ const char *vertexShaderSource = "#version 330 core\n"
     "}\0";
 const char *fragmentShaderSource = "#version 330 core\n"
     "out vec4 FragColor;\n"
+    "uniform vec4 objectColor;\n"
     "void main()\n"
     "{\n"
-    "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+    "   FragColor = objectColor;"
     "}\n\0";
 
 void processInput(GLFWwindow* window, Player& player, float deltaTime);
@@ -96,6 +98,7 @@ int main()
     }
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
+    int colorLocation = glGetUniformLocation(shaderProgram, "objectColor");
 
     Player player;
     float lastFrame = 0.0f;
@@ -297,6 +300,7 @@ int main()
         glViewport(mapXOffset,mapYOffset, mapViewportSize, mapViewportSize);
 
         //Map render
+        glUniform4fv(colorLocation, 1, WALL_COLOR);
         glBindVertexArray(mapVAO); //draw this config 
         glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(mapIndices.size()), GL_UNSIGNED_INT, 0); //execs the draw
 
@@ -311,12 +315,14 @@ int main()
         //Raycast render
         if(!rayVertices.empty())
         {
-           glBindVertexArray(rayVAO);
-           glDrawArrays(GL_LINES, 0, static_cast<GLsizei>(rayVertices.size() / 3)); 
+            glUniform4f(colorLocation, 1.0f, 0.0f, 0.0f, 1.0f);
+            glBindVertexArray(rayVAO);
+            glDrawArrays(GL_LINES, 0, static_cast<GLsizei>(rayVertices.size() / 3)); 
         }
         glViewport(halfWidth, 0, framebufferWidth - halfWidth, framebufferHeight);
 
         //Wall render
+        glUniform4fv(colorLocation, 1, WALL_COLOR);
         glBindVertexArray(wallVAO);
         glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(wallVertices.size() / 3));
 
